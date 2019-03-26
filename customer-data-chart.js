@@ -4,7 +4,7 @@ This file creates a bubble chart for the data loaded from "gen.txt" file
 var Customer_data_chart;
 
 d3.json("gen.txt", function(error, root) {
-	//The raw data json has been loaded successfully	
+	//The raw data json has been loaded successfully
 	var LArr = [];
 
 	//--------------------------------------------------------------------------------------
@@ -19,7 +19,7 @@ d3.json("gen.txt", function(error, root) {
 		  negativeSuffix = " in income"
 		  n = -n
 		};
-		
+
 		if (n >= 1000000000000) {
 			suffix = " trillion"
 			n = n / 1000000000000
@@ -32,9 +32,9 @@ d3.json("gen.txt", function(error, root) {
 			suffix = " million"
 			n = n / 1000000
 			decimals = 1
-		} 
-		
-		
+		}
+
+
 		prefix = ""
 		if (decimals > 0) {
 			if (n<1) {prefix = "0"};
@@ -46,8 +46,8 @@ d3.json("gen.txt", function(error, root) {
 				remainder = s.substr(s.length-(decimals),decimals);
 				num = s.substr(0,s.length - decimals);
 			}
-			
-			
+
+
 			return  negativePrefix + prefix + num.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + "." + remainder + suffix + negativeSuffix;
 		} else {
 			s = String(Math.round(n));
@@ -55,14 +55,14 @@ d3.json("gen.txt", function(error, root) {
 			return  negativePrefix + s + suffix + negativeSuffix;
 		}
 	};
-	
+
 	//--------------------------------------------------------------------------------------
 	//Function to traverse the tree data nodes
 	function L_TraverseTree(p_node, p_IsRootNode, p_ParentArray)
 	{
 		if (! p_node.Children)
 		{
-			//The node is a data node (leaf node) so add it's object to the array			
+			//The node is a data node (leaf node) so add it's object to the array
 			var LLeafObject = {};
 			//set parents array
 			LLeafObject.ParentArray = p_ParentArray;
@@ -79,30 +79,30 @@ d3.json("gen.txt", function(error, root) {
 			//The node is parent node (non leaf node) so traverse its children
 			var LLoopIndex = 0,
 			LCount = p_node.Children.length;
-			
+
 			if(p_IsRootNode !== true)
 			{
 				//The node is not root node so push the name of this node to the parent array
 				p_ParentArray.push(p_node.Id);
 			}
-			
+
 			var LTempParentArray;
 			//traverse the child nodes of the current node
 			for (; LLoopIndex < LCount; LLoopIndex++)
-			{						
+			{
 				if(p_IsRootNode === true)
 				{
 					//The tree is root node
 					p_ParentArray = [];
 				}
-				
+
 				//clone the parent array
-				LTempParentArray =	p_ParentArray.slice(0);				
+				LTempParentArray =	p_ParentArray.slice(0);
 				//Traverse the child tree
-				L_TraverseTree(p_node.Children[LLoopIndex], false, p_ParentArray);				
+				L_TraverseTree(p_node.Children[LLoopIndex], false, p_ParentArray);
 				//Reset the parent array
 				p_ParentArray = LTempParentArray.slice(0);
-			}		
+			}
 		}
 	}
 
@@ -115,11 +115,11 @@ d3.json("gen.txt", function(error, root) {
 			var LIndex = 0,
 			LCnt = p_Array.length,
 			LString = '';
-			
+
 			for(; LIndex < LCnt; LIndex++)
 			{
 				LString = LString + '\'' + p_Array[LIndex] + '\'';
-				
+
 				if(LIndex < (LCnt - 1))
 				{
 					LString = LString + ',';
@@ -127,17 +127,17 @@ d3.json("gen.txt", function(error, root) {
 			}
 			return LString;
 		}*/
-		
+
 		function L_L_GetCategorisString(p_CatagoryArray)
 		{
 			var LIndex = 0,
 			LCnt = p_CatagoryArray.length,
 			LString = '';
-			
+
 			for(; LIndex < LCnt; LIndex++)
 			{
 				LString = LString + '\'' + p_CatagoryArray[LIndex].Name + '\'';
-				
+
 				if(LIndex < (LCnt - 1))
 				{
 					LString = LString + ',';
@@ -151,25 +151,26 @@ d3.json("gen.txt", function(error, root) {
 		LLoopIndex = 0,
 		LCount = root.levels.length,
 		LHTML = '';
-		
+
 		//Traverse the sections/catagories node
 		for(; LLoopIndex < LCount; LLoopIndex++ )
 		{
 			var LLevel = root.levels[LLoopIndex],
 			LData = [];
 			LData[0] = LLevel.CatagoriesIncluded;
-			
+
 			//Create buttons
-			LButtonsContainerDiv.append('li')
+			LButtonsContainerDiv.append('button')
 			.text(LLevel.LevelName)
 			.attr('title', L_L_GetCategorisString(LLevel.CatagoriesIncluded))
+			.attr('class', "myButton")
 			.data(LData)
 			.on('click', function(d, i){
 				//On click display the catagorized data
 				Customer_data_chart.displayCategorised(d);
 			});
 		}
-		
+
 		//Set the inner HTML of the buttons container div
 		LButtonsContainerDiv.innerHTML = LHTML;
 	}
@@ -178,10 +179,10 @@ d3.json("gen.txt", function(error, root) {
 
 	//Draw Level buttons
 	L_DrawLevelButtons();
-	
+
 	//Invoke the traversal logic and get data into the array
 	L_TraverseTree(root, true, []);
-	
+
 	//Create configure object for the chart
 	var LChartConfig = {};
 	LChartConfig.renderTo = d3.select(".div-svg-cntnr");
@@ -224,12 +225,12 @@ d3.json("gen.txt", function(error, root) {
 			return '#000000';
 		}
 	};
-	
+
 	//Handle mapping of raw data to chart data
 	LChartConfig.onMapRawDataToChartData = function(p_SomeObj)
 	{
 		var LObject = p_SomeObj;
-		
+
 		//return the object
 		return {
 			Name : LObject.Name,
@@ -243,7 +244,7 @@ d3.json("gen.txt", function(error, root) {
 	{
 		var LMe = this;
 		var LValue = p_data.Disbursement;
-		
+
 		if(LValue < 1)
 		{
 			return 2;
@@ -293,54 +294,54 @@ d3.json("gen.txt", function(error, root) {
 	LChartConfig.onCircleMouseHover = function (p_Circle, p_Data, p_Index){
 		var el = d3.select(p_Circle);
 		var xpos = Number(el.attr('cx') + p_Data.radius);
-        var ypos = (el.attr('cy') - p_Data.radius - 10 + 80);
-		
+        var ypos = (el.attr('cy') - p_Data.radius - 10);
+
 		//Highlight the bubble border
-        el.style("stroke","#000").style("stroke-width",3);          
-		
+        el.style("stroke","#000").style("stroke-width",3);
+
 		//display tool tip
 		d3.select("#jay-tooltip .jay-department").text(p_Data.Name);
 		d3.select("#jay-tooltip .jay-value").html("$" + L_FormatNumber(p_Data.Disbursement));
 		d3.select("#jay-tooltip").style('top',ypos+"px").style('left',xpos+"px").style('display','block');
 	};
-	
+
 	//Handle on mouse out event of the bubble
-	LChartConfig.onCircleMouseOut = function (p_Circle, p_Data, p_Index){	
+	LChartConfig.onCircleMouseOut = function (p_Circle, p_Data, p_Index){
 		//Hide the hint
-		d3.select("#jay-tooltip").style('display','none');		
-		
+		d3.select("#jay-tooltip").style('display','none');
+
 		//Remove the highlighting of the bubble
 		var el = d3.select(p_Circle)
 		d3.select(p_Circle)
           .style("stroke-width",1)
-          .style("stroke", function(p_Data){ return d3.rgb(p_Data.color).darker(2); });          
+          .style("stroke", function(p_Data){ return d3.rgb(p_Data.color).darker(2); });
 	};
-	
+
 	//Handle on section of the text
 	//This method will be invoked whenever the section is being created
 	LChartConfig.onGetSectionText = function (p_SectionObj, p_TitleTextObj){
 		var LText = p_SectionObj.Name,
 		LTotal = 0;
-		
-		//Compute total disbursement of the section 
+
+		//Compute total disbursement of the section
 		p_SectionObj.DataCollection.forEach(function (p_Data)
 		{
 			LTotal = LTotal + p_Data.Disbursement;
 		});
-		
+
 		//Display the total disbursement number
 		p_TitleTextObj.append('tspan').attr('x', p_SectionObj.HeaderX).attr('id', 'spval').text('$' + L_FormatNumber(LTotal));
-		
+
 		//Display the section text
 		p_TitleTextObj.append('tspan').attr('x', p_SectionObj.HeaderX).attr('id', 'spcatagory').attr('dy', '20').text(LText);
 	};
-	
+
 	//Set height of the chart
 	LChartConfig.height = 800;
-	
+
 	//Set width of the chart
 	LChartConfig.width = 1000;
-	
+
 	//Create a new chart
 	Customer_data_chart = new clsBubbleChart(LChartConfig);
 });

@@ -2,97 +2,97 @@
     "name": "gen",
     "levels": [
         {
-            "LevelName": "Total Peacekeeping Disbursement",
+            "LevelName": "Total",
             "CatagoriesIncluded": []
         },
         {
-            "LevelName": "Head Quarter vs Field Cost Center",
+            "LevelName": "Split Blue and Green",
             "CatagoriesIncluded": [
                 {
-                    "Name": "HQ Cost Center",
+                    "Name": "Blue Center",
                     "Id": 1
                 },
                 {
-                    "Name": "Field Cost Center",
+                    "Name": "Green Center",
                     "Id": 2
                 }
             ]
         },
         {
-            "LevelName": "HQ Cost Center Disbursements",
+            "LevelName": "Split Blue",
             "CatagoriesIncluded": [
                 {
-                    "Name": "Military and police personnel",
+                    "Name": "Type A",
                     "Id": 11
                 },
                 {
-                    "Name": "Civilian personnel",
+                    "Name": "Type B",
                     "Id": 12
                 },
                 {
-                    "Name": "Operational costs",
+                    "Name": "Type C",
                     "Id": 13
                 },
                 {
-                    "Name": "Pro-rated Costs",
+                    "Name": "Type D",
                     "Id": 14
                 }
             ]
         },
         {
-            "LevelName": "Field Cost Center Disbursements",
+            "LevelName": "Split Green",
             "CatagoriesIncluded": [
                 {
-                    "Name": "Military and police personnel",
+                    "Name": "Type A",
                     "Id": 21
                 },
                 {
-                    "Name": "Civilian personnel",
+                    "Name": "Type B",
                     "Id": 22
                 },
                 {
-                    "Name": "Operational costs",
+                    "Name": "Type C",
                     "Id": 23
                 },
                 {
-                    "Name": "Pro-rated Costs",
+                    "Name": "Type D",
                     "Id": 24
                 }
             ]
         },
         {
-            "LevelName": "All Subcatagorized Disbursements",
+            "LevelName": "Split All",
             "CatagoriesIncluded": [
                 {
-                    "Name": "Military and police personnel",
+                    "Name": "Type A (Blue)",
                     "Id": 11
                 },
                 {
-                    "Name": "Civilian personnel",
+                    "Name": "Type B (Blue)",
                     "Id": 12
                 },
                 {
-                    "Name": "Operational costs",
+                    "Name": "Type C (Blue)",
                     "Id": 13
                 },
                 {
-                    "Name": "Pro-rated Costs",
+                    "Name": "Type D (Blue)",
                     "Id": 14
                 },
                 {
-                    "Name": "Military and police personnel",
+                    "Name": "Type A (Green)",
                     "Id": 21
                 },
                 {
-                    "Name": "Civilian personnel",
+                    "Name": "Type B (Green)",
                     "Id": 22
                 },
                 {
-                    "Name": "Operational costs",
+                    "Name": "Type C (Green)",
                     "Id": 23
                 },
                 {
-                    "Name": "Pro-rated Costs",
+                    "Name": "Type D (Green)",
                     "Id": 24
                 }
             ]
